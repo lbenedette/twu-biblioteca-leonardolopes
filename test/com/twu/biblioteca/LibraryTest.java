@@ -17,10 +17,19 @@ public class LibraryTest {
     private PrintStream sysOut;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
+    private List<String> books;
+    private Library library;
+
     @Before
-    public void setUp() throws Exception {
+    public void setUpStreams() throws Exception {
         sysOut = System.out;
         System.setOut(new PrintStream(outContent));
+    }
+
+    @Before
+    public void setUpLibrary() throws Exception {
+        books = new ArrayList<>();
+        library = new Library(books);
     }
 
     @After
@@ -30,9 +39,6 @@ public class LibraryTest {
 
     @Test
     public void shouldPrintWelcomeMessageOnRun() {
-        List<String> books = new ArrayList<>();
-        Library library = new Library(books);
-
         library.run();
 
         String firstLine = outContent.toString().split("\n")[0];
@@ -41,9 +47,6 @@ public class LibraryTest {
 
     @Test
     public void shouldPrintABookListAfterWelcomeMessage() {
-        List<String> books = new ArrayList<>();
-        Library library = new Library(books);
-
         books.add("The Fellowship Of The Ring");
         library.run();
 
@@ -53,9 +56,6 @@ public class LibraryTest {
 
     @Test
     public void shouldPrintNothingAfterWelcomeMessageIfBooksIsEmpty() {
-        List<String> books = new ArrayList<>();
-        Library library = new Library(books);
-
         library.run();
 
         assertThat(outContent.toString(), is("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n"));
