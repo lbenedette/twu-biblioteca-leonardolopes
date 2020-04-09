@@ -4,13 +4,18 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
 public class ApplicationTest {
@@ -19,6 +24,7 @@ public class ApplicationTest {
 
     private List<Book> books;
     private BookCollection bookCollection;
+    private BufferedReader bufferedReader;
     private Application app;
 
     @Before
@@ -29,9 +35,9 @@ public class ApplicationTest {
 
     @Before
     public void setUp() throws Exception {
-        books = new ArrayList<>();
-        bookCollection = new BookCollection(books);
-        app = new Application(bookCollection);
+        bookCollection = mock(BookCollection.class);
+        bufferedReader = mock(BufferedReader.class);
+        app = new Application(bookCollection, bufferedReader);
     }
 
     @After
@@ -40,30 +46,26 @@ public class ApplicationTest {
     }
 
     @Test
-    public void shouldPrintWelcomeMessageOnRun() {
-        app.run();
+    public void shouldPrintWelcomeMessage() {
+        app.printGreeting();
 
-        assertThat(outContent.toString().split("\n")[0], is("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!"));
+        assertThat(outContent.toString(), is("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n"));
     }
 
     @Test
     public void shouldPrintMenuWithOptions() {
         app.printMenu();
 
-        String menu = "MENU\n1 - List of books\n";
+        String menu = "MENU\n1 - List of books\n\nEnter a option:\n";
         assertThat(outContent.toString(), is(menu));
     }
 
     @Test
-    public void shouldPrintMenuAfterTheWelcomeMessage() {
-        app.run();
+    public void shouldListBookWhenUserChooseListOfBooks() throws IOException {
+        when(bufferedReader.readLine()).thenReturn("1");
 
-        String[] rows = outContent.toString().split("\n");
-        String welcomeMessage = rows[0];
-        String menu = rows[1];
-        String firstOption = rows[2];
-        assertThat(welcomeMessage, is("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!"));
-        assertThat(menu, is("MENU"));
-        assertThat(firstOption, is("1 - List of books"));
+        app.readOption();
+
+        verify(bookCollection).listBooks();
     }
 }

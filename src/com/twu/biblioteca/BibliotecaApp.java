@@ -1,5 +1,7 @@
 package com.twu.biblioteca;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +9,7 @@ public class BibliotecaApp {
 
     public static void main(String[] args) {
         BookCollection bookCollection = new BookCollection(books());
-        Application app = new Application(bookCollection);
+        Application app = new Application(bookCollection, new BufferedReader(new InputStreamReader(System.in)));
 
         app.run();
     }
