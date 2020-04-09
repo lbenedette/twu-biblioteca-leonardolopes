@@ -47,22 +47,23 @@ public class ApplicationTest {
     }
 
     @Test
-    public void shouldHaveABookCollection() {
-        assertThat(bookCollection, is(app.getBookCollection()));
+    public void shouldPrintMenuWithOptions() {
+        app.printMenu();
+
+        String menu = "MENU\n1 - List of books\n";
+        assertThat(outContent.toString(), is(menu));
     }
 
     @Test
-    public void shouldPrintABookListAfterTheWelcomeMessage() {
-        books.add(new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954"));
-
+    public void shouldPrintMenuAfterTheWelcomeMessage() {
         app.run();
 
         String[] rows = outContent.toString().split("\n");
         String welcomeMessage = rows[0];
-        String header = rows[1];
-        String bookRow = rows[2];
+        String menu = rows[1];
+        String firstOption = rows[2];
         assertThat(welcomeMessage, is("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!"));
-        assertThat(header, is(String.format("%-40s%-40s%-40s", "Title", "Author", "Year Published")));
-        assertThat(bookRow, is(String.format("%-40s%-40s%-40s", "The Fellowship Of The Ring", "J. R. R. Tolkien", "1954")));
+        assertThat(menu, is("MENU"));
+        assertThat(firstOption, is("1 - List of books"));
     }
 }
