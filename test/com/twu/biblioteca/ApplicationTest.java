@@ -28,10 +28,19 @@ public class ApplicationTest {
 
     @Test
     public void shouldPrintWelcomeMessageOnRun() {
-        Application app = new Application();
+        BookCollection bookCollection = new BookCollection();
+        Application app = new Application(bookCollection);
 
         app.run();
 
         assertThat(outContent.toString().split("\n")[0], is("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!"));
+    }
+
+    @Test
+    public void shouldHaveABookCollection() {
+        BookCollection bookCollection = new BookCollection();
+        Application app = new Application(bookCollection);
+
+        assertThat(bookCollection, is(app.getBookCollection()));
     }
 }
