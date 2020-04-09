@@ -56,7 +56,7 @@ public class ApplicationTest {
     public void shouldPrintMenuWithOptions() {
         app.printMenu();
 
-        String menu = "MENU\n1 - List of books\n\nEnter a option:\n";
+        String menu = "MENU\n1 - List of books\n\n";
         assertThat(outContent.toString(), is(menu));
     }
 
@@ -64,7 +64,7 @@ public class ApplicationTest {
     public void shouldListBookWhenUserChooseListOfBooks() throws IOException {
         when(bufferedReader.readLine()).thenReturn("1");
 
-        app.readOption();
+        app.enterOption();
 
         verify(bookCollection).listBooks();
     }
