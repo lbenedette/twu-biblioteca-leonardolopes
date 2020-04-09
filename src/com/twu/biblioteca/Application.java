@@ -9,6 +9,7 @@ public class Application {
 
     public void run() {
         System.out.println("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!");
+        bookCollection.listBooks();
     }
 
     public BookCollection getBookCollection() {
