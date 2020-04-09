@@ -17,7 +17,7 @@ public class LibraryTest {
     private PrintStream sysOut;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
-    private List<String> books;
+    private List<Book> books;
     private Library library;
 
     @Before
@@ -46,12 +46,15 @@ public class LibraryTest {
     }
 
     @Test
-    public void shouldPrintABookListAfterWelcomeMessage() {
-        books.add("The Fellowship Of The Ring");
+    public void shouldPrintABookListWithHeaderAfterWelcomeMessage() {
+        books.add(new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954"));
         library.run();
 
-        String secondLine = outContent.toString().split("\n")[1];
-        assertThat(secondLine, is("The Fellowship Of The Ring"));
+        String[] rows = outContent.toString().split("\n");
+        String header = rows[1];
+        String firstBookRow = rows[2];
+        assertThat(header, is(String.format("%-40s%-40s%-40s", "Title", "Author", "Year Published")));
+        assertThat(firstBookRow, is(is(String.format("%-40s%-40s%-40s", "The Fellowship Of The Ring", "J. R. R. Tolkien", "1954"))));
     }
 
     @Test

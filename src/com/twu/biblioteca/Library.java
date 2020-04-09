@@ -3,9 +3,9 @@ package com.twu.biblioteca;
 import java.util.List;
 
 public class Library {
-    private List<String> books;
+    private List<Book> books;
 
-    public Library(List<String> books) {
+    public Library(List<Book> books) {
         this.books = books;
     }
 
@@ -14,8 +14,12 @@ public class Library {
     }
 
     private void bookList() {
-        for (String book : books) {
-            System.out.println(book);
+        if (!books.isEmpty()) {
+            System.out.format("%-40s%-40s%-40s\n", "Title", "Author", "Year Published");
+        }
+
+        for (Book book : books) {
+            System.out.format("%-40s%-40s%-40s\n", book.getFields());
         }
     }
 
