@@ -5,8 +5,8 @@ import java.io.IOException;
 
 
 public class Application {
-    private BookCollection bookCollection;
-    private BufferedReader bufferedReader;
+    private final BookCollection bookCollection;
+    private final BufferedReader bufferedReader;
 
     public Application(BookCollection bookCollection, BufferedReader bufferedReader) {
         this.bookCollection = bookCollection;
@@ -38,7 +38,7 @@ public class Application {
     private String readLine() {
         String input = null;
         try {
-            input = bufferedReader.readLine();
+            input = bufferedReader.readLine(); // 1
         } catch (IOException e) {
             e.printStackTrace();
         }
