@@ -12,9 +12,9 @@ import java.io.PrintStream;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.not;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 
 public class ApplicationTest {
@@ -60,18 +60,24 @@ public class ApplicationTest {
 
     @Test
     public void shouldListBookWhenUserChooseListOfBooks() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("1");
-
-        app.enterOption();
+        String option = "1";
+        app.executeAction(option);
 
         verify(bookCollection).listBooks();
     }
 
     @Test
-    public void shouldShowAErrorMessageWhenEnteredAInvalidOption() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("9");
+    public void shouldNotShowErrorMessageWhenQuitOptionIsSelected() throws IOException {
+        String option = "0";
+        app.executeAction(option);
 
-        app.enterOption();
+        assertThat(outContent.toString(), not(containsString("Please select a valid option!")));
+    }
+
+    @Test
+    public void shouldShowAErrorMessageWhenEnteredAInvalidOption() throws IOException {
+        String option = "9";
+        app.executeAction(option);
 
         assertThat(outContent.toString(), containsString("Please select a valid option!"));
     }

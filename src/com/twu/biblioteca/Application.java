@@ -14,9 +14,14 @@ public class Application {
     }
 
     public void run() {
+        String option = "";
+
         printGreeting();
         printMenu();
-        enterOption();
+        while (!option.equals("0")) {
+            option = enterOption();
+            executeAction(option);
+        }
     }
 
     public void printGreeting() {
@@ -29,10 +34,9 @@ public class Application {
         System.out.println();
     }
 
-    public void enterOption() {
+    public String enterOption() {
         System.out.println("Enter a option:");
-        String option = readLine();
-        executeAction(option);
+        return readLine();
     }
 
     private String readLine() {
@@ -46,9 +50,11 @@ public class Application {
         return input;
     }
 
-    private void executeAction(String option) {
+    public void executeAction(String option) {
         if ("1".equals(option)) {
             bookCollection.listBooks();
+        } else if ("0".equals(option)) {
+            return;
         } else {
             System.out.println("Please select a valid option!");
         }
