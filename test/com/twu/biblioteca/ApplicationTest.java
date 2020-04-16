@@ -8,10 +8,10 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.List;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -21,7 +21,6 @@ public class ApplicationTest {
     private PrintStream sysOut;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
-    private List<Book> books;
     private BookCollection bookCollection;
     private BufferedReader bufferedReader;
     private Application app;
@@ -66,5 +65,14 @@ public class ApplicationTest {
         app.enterOption();
 
         verify(bookCollection).listBooks();
+    }
+
+    @Test
+    public void shouldShowAErrorMessageWhenEnteredAInvalidOption() throws IOException {
+        when(bufferedReader.readLine()).thenReturn("9");
+
+        app.enterOption();
+
+        assertThat(outContent.toString(), containsString("Please select a valid option!"));
     }
 }

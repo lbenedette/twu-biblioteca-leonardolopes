@@ -49,6 +49,8 @@ public class Application {
     private void executeAction(String option) {
         if ("1".equals(option)) {
             bookCollection.listBooks();
+        } else {
+            System.out.println("Please select a valid option!");
         }
     }
 }
