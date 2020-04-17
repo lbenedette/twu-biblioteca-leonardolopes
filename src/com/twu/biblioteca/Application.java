@@ -49,12 +49,15 @@ public class Application {
     }
 
     public void executeAction(String option) {
-        if ("1".equals(option)) {
-            bookCollection.listBooks();
-        } else if ("0".equals(option)) {
-            System.exit(0);
-        } else {
-            System.out.println("Please select a valid option!");
+        switch (option) {
+            case "0":
+                System.exit(0);
+                break;
+            case "1":
+                bookCollection.listBooks();
+                break;
+            default:
+                System.out.println("Please select a valid option!");
         }
     }
 }
