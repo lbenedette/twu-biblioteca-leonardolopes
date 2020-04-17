@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookCollection {
@@ -10,13 +11,22 @@ public class BookCollection {
     }
 
     public void listBooks() {
-        if (!books.isEmpty()) {
-            System.out.format("%-40s%-40s%-40s\n", "Title", "Author", "Year Published");
-        }
+        System.out.format("%-40s%-40s%-40s\n", "Title", "Author", "Year Published");
 
-        for (Book book : books) {
+        for (Book book : findAvailableBooks()) {
             System.out.format("%-40s%-40s%-40s\n", book.getFields());
         }
+    }
+
+    public List<Book> findAvailableBooks() {
+        List<Book> availableBooks = new ArrayList<>();
+        for (Book book : this.books) {
+            if (book.isAvailable()) {
+                availableBooks.add(book);
+            }
+        }
+
+        return availableBooks;
     }
 
     public Book findByTitle(String title) {

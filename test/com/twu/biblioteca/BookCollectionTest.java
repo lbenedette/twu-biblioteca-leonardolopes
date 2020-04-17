@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
 public class BookCollectionTest {
@@ -51,10 +53,15 @@ public class BookCollectionTest {
     }
 
     @Test
-    public void shouldPrintNothingWhenBookListIsEmpty() {
+    public void shouldNotPrintCheckedBooks() {
+        Book checkedBook = new Book("The Two Towers", "J. R. R. Tolkien", "1954");
+        books.add(checkedBook);
+        books.add(book);
+        checkedBook.checkout();
+
         bookCollection.listBooks();
 
-        assertThat(outContent.toString(), is(""));
+        assertThat(outContent.toString(), not(containsString("The Two Towers")));
     }
 
     @Test
