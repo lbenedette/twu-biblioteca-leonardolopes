@@ -54,7 +54,7 @@ public class ApplicationTest {
     public void shouldPrintMenuWithOptions() {
         app.printMenu();
 
-        String menu = "MENU\n1 - List of books\n\n";
+        String menu = "MENU\n1 - List of books\n0 - Exit application\n\n";
         assertThat(outContent.toString(), is(menu));
     }
 
@@ -64,14 +64,6 @@ public class ApplicationTest {
         app.executeAction(option);
 
         verify(bookCollection).listBooks();
-    }
-
-    @Test
-    public void shouldNotShowErrorMessageWhenQuitOptionIsSelected() throws IOException {
-        String option = "0";
-        app.executeAction(option);
-
-        assertThat(outContent.toString(), not(containsString("Please select a valid option!")));
     }
 
     @Test

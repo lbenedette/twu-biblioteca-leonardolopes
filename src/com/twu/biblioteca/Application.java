@@ -14,13 +14,10 @@ public class Application {
     }
 
     public void run() {
-        String option = "";
-
         printGreeting();
-        printMenu();
-        while (!option.equals("0")) {
-            option = enterOption();
-            executeAction(option);
+        while (true) {
+            printMenu();
+            executeAction(enterOption());
         }
     }
 
@@ -31,6 +28,7 @@ public class Application {
     public void printMenu() {
         System.out.println("MENU");
         System.out.println("1 - List of books");
+        System.out.println("0 - Exit application");
         System.out.println();
     }
 
@@ -54,7 +52,7 @@ public class Application {
         if ("1".equals(option)) {
             bookCollection.listBooks();
         } else if ("0".equals(option)) {
-            return;
+            System.exit(0);
         } else {
             System.out.println("Please select a valid option!");
         }
