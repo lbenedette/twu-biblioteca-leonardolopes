@@ -16,6 +16,16 @@ public class BookCollectionTest {
     private PrintStream sysOut;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
+    private final Book book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954");
+    private List<Book> books;
+    private BookCollection bookCollection;
+
+    @Before
+    public void setUp() throws Exception {
+        books = new ArrayList<>();
+        bookCollection = new BookCollection(books);
+    }
+
     @Before
     public void setUpStreams() throws Exception {
         sysOut = System.out;
@@ -29,9 +39,7 @@ public class BookCollectionTest {
 
     @Test
     public void shouldPrintBookListInATableFormatWithHeader() {
-        List<Book> books = new ArrayList<>();
-        BookCollection bookCollection = new BookCollection(books);
-        books.add(new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954"));
+        books.add(book);
 
         bookCollection.listBooks();
 
@@ -44,9 +52,6 @@ public class BookCollectionTest {
 
     @Test
     public void shouldPrintNothingWhenBookListIsEmpty() {
-        List<Book> books = new ArrayList<>();
-        BookCollection bookCollection = new BookCollection(books);
-
         bookCollection.listBooks();
 
         assertThat(outContent.toString(), is(""));
@@ -54,34 +59,22 @@ public class BookCollectionTest {
 
     @Test
     public void shouldFindBookByTitle() {
-        List<Book> books = new ArrayList<>();
-        BookCollection bookCollection = new BookCollection(books);
-        Book book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954");
-        Book foundBook;
         books.add(book);
 
-        foundBook = bookCollection.findByTitle("The Fellowship Of The Ring");
+        Book foundBook = bookCollection.findByTitle("The Fellowship Of The Ring");
 
         assertThat(book, is(foundBook));
     }
 
     @Test
     public void shouldReturnNullWhenBookDontExist() {
-        List<Book> books = new ArrayList<>();
-        BookCollection bookCollection = new BookCollection(books);
-        books.add(new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954"));
-        Book foundBook;
-
-        foundBook = bookCollection.findByTitle("The Two Towers");
+        Book foundBook = bookCollection.findByTitle("The Two Towers");
 
         assertThat(null, is(foundBook));
     }
 
     @Test
     public void shouldCheckoutBookAndChangeItStatus() {
-        List<Book> books = new ArrayList<>();
-        BookCollection bookCollection = new BookCollection(books);
-        Book book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954");
         books.add(book);
 
         bookCollection.checkoutBook(book);
