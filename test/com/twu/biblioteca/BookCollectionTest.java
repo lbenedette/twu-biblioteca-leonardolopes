@@ -51,4 +51,41 @@ public class BookCollectionTest {
 
         assertThat(outContent.toString(), is(""));
     }
+
+    @Test
+    public void shouldFindBookByTitle() {
+        List<Book> books = new ArrayList<>();
+        BookCollection bookCollection = new BookCollection(books);
+        Book book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954");
+        Book foundBook;
+        books.add(book);
+
+        foundBook = bookCollection.findByTitle("The Fellowship Of The Ring");
+
+        assertThat(book, is(foundBook));
+    }
+
+    @Test
+    public void shouldReturnNullWhenBookDontExist() {
+        List<Book> books = new ArrayList<>();
+        BookCollection bookCollection = new BookCollection(books);
+        books.add(new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954"));
+        Book foundBook;
+
+        foundBook = bookCollection.findByTitle("The Two Towers");
+
+        assertThat(null, is(foundBook));
+    }
+
+    @Test
+    public void shouldCheckoutBookAndChangeItStatus() {
+        List<Book> books = new ArrayList<>();
+        BookCollection bookCollection = new BookCollection(books);
+        Book book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954");
+        books.add(book);
+
+        bookCollection.checkoutBook(book);
+
+        assertThat(false, is(book.isAvailable()));
+    }
 }

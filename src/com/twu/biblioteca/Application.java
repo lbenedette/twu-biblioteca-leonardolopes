@@ -28,6 +28,7 @@ public class Application {
     public void printMenu() {
         System.out.println("MENU");
         System.out.println("1 - List of books");
+        System.out.println("2 - Checkout book");
         System.out.println("0 - Exit application");
         System.out.println();
     }

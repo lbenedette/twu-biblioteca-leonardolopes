@@ -54,13 +54,26 @@ public class ApplicationTest {
     public void shouldPrintMenuWithOptions() {
         app.printMenu();
 
-        String menu = "MENU\n1 - List of books\n0 - Exit application\n\n";
-        assertThat(outContent.toString(), is(menu));
+        StringBuilder menuString = new StringBuilder();
+        menuString.append("MENU\n")
+            .append("1 - List of books\n")
+            .append("2 - Checkout book\n")
+            .append("0 - Exit application\n")
+            .append("\n");
+        assertThat(outContent.toString(), is(menuString.toString()));
     }
 
     @Test
     public void shouldListBookWhenUserChooseListOfBooks() throws IOException {
         String option = "1";
+        app.executeAction(option);
+
+        verify(bookCollection).listBooks();
+    }
+
+    @Test
+    public void shouldAskForBookTitleWhenUserChooseCheckoutBook() throws IOException {
+        String option = "2";
         app.executeAction(option);
 
         verify(bookCollection).listBooks();
