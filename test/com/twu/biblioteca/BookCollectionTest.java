@@ -4,8 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +13,6 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
 public class BookCollectionTest {
-    private PrintStream sysOut;
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-
     private final Book book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954");
     private List<Book> books;
     private BookCollection bookCollection;
@@ -28,44 +23,37 @@ public class BookCollectionTest {
         bookCollection = new BookCollection(books);
     }
 
-    @Before
-    public void setUpStreams() throws Exception {
-        sysOut = System.out;
-        System.setOut(new PrintStream(outContent));
-    }
-
-    @After
-    public void setDown() throws Exception {
-        System.setOut(sysOut);
-    }
-
     @Test
-    public void shouldPrintBookListInATableFormatWithHeader() {
+    public void printBookListWithOneBookTest() {
         books.add(book);
 
-        bookCollection.listBooks();
+        String bookListString = String.format("%-40s%-40s%-40s\n", "Title", "Author", "Year Published");
+        bookListString += String.format("%-40s%-40s%-40s\n", "The Fellowship Of The Ring", "J. R. R. Tolkien", "1954");
 
-        String[] rows = outContent.toString().split("\n");
-        String header = rows[0];
-        String bookRow = rows[1];
-        assertThat(header, is(String.format("%-40s%-40s%-40s", "Title", "Author", "Year Published")));
-        assertThat(bookRow, is(String.format("%-40s%-40s%-40s", "The Fellowship Of The Ring", "J. R. R. Tolkien", "1954")));
+        assertThat(bookListString, is(bookCollection.listBooks()));
     }
 
     @Test
-    public void shouldNotPrintCheckedBooks() {
-        Book checkedBook = new Book("The Two Towers", "J. R. R. Tolkien", "1954");
-        books.add(checkedBook);
+    public void printBookListWithTwoBooksTest() {
         books.add(book);
-        checkedBook.checkout();
+        books.add(new Book("The Two Towers", "J. R. R. Tolkien", "1954"));
 
-        bookCollection.listBooks();
+        String bookListString = String.format("%-40s%-40s%-40s\n", "Title", "Author", "Year Published");
+        bookListString += String.format("%-40s%-40s%-40s\n", "The Fellowship Of The Ring", "J. R. R. Tolkien", "1954");
+        bookListString += String.format("%-40s%-40s%-40s\n", "The Two Towers", "J. R. R. Tolkien", "1954");
 
-        assertThat(outContent.toString(), not(containsString("The Two Towers")));
+        assertThat(bookListString, is(bookCollection.listBooks()));
     }
 
     @Test
-    public void shouldFindBookByTitle() {
+    public void printBookListWithoutBooksTest() {
+        String bookListString = String.format("%-40s%-40s%-40s\n", "Title", "Author", "Year Published");
+
+        assertThat(bookListString, is(bookCollection.listBooks()));
+    }
+
+    @Test
+    public void findBookByTitleTest() {
         books.add(book);
 
         Book foundBook = bookCollection.findByTitle("The Fellowship Of The Ring");
@@ -74,18 +62,37 @@ public class BookCollectionTest {
     }
 
     @Test
-    public void shouldReturnNullWhenBookDontExist() {
+    public void returnNullWhenBookDontExistTest() {
         Book foundBook = bookCollection.findByTitle("The Two Towers");
 
         assertThat(null, is(foundBook));
     }
 
     @Test
-    public void shouldCheckoutBookAndChangeItStatus() {
+    public void checkoutBookAndChangeItAvailableStatusTest() {
         books.add(book);
 
-        bookCollection.checkoutBook(book);
+        bookCollection.checkoutBook("The Fellowship Of The Ring");
 
         assertThat(false, is(book.isAvailable()));
+    }
+
+    @Test
+    public void Test() {
+        books.add(book);
+
+        bookCollection.checkoutBook("The Fellowship Of The Ring");
+
+        assertThat(false, is(book.isAvailable()));
+    }
+
+    @Test
+    public void printOnlyAvailableBooksInBookListTest() {
+        books.add(new Book("The Two Towers", "J. R. R. Tolkien", "1954"));
+
+        bookCollection.checkoutBook("The Two Towers");
+
+        String checkedBookRow = String.format("%-40s%-40s%-40s\n", "The Two Towers", "J. R. R. Tolkien", "1954");
+        assertThat(checkedBookRow, not(containsString(bookCollection.listBooks())));
     }
 }

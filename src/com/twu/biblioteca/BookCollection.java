@@ -10,12 +10,14 @@ public class BookCollection {
         this.books = books;
     }
 
-    public void listBooks() {
-        System.out.format("%-40s%-40s%-40s\n", "Title", "Author", "Year Published");
+    public String listBooks() {
+        StringBuilder bookList = new StringBuilder(String.format("%-40s%-40s%-40s\n", "Title", "Author", "Year Published"));
 
         for (Book book : findAvailableBooks()) {
-            System.out.format("%-40s%-40s%-40s\n", book.getFields());
+            bookList.append(String.format("%-40s%-40s%-40s\n", book.getFields()));
         }
+
+        return bookList.toString();
     }
 
     public List<Book> findAvailableBooks() {
@@ -39,7 +41,8 @@ public class BookCollection {
         return null;
     }
 
-    public void checkoutBook(Book book) {
+    public void checkoutBook(String bookTitle) {
+        Book book = findByTitle(bookTitle);
         book.checkout();
     }
 }
