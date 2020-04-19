@@ -11,14 +11,18 @@ public class BibliotecaApp {
     public static void main(String[] args) {
         PrintStream printStream = System.out;
 
+        GreetingPrinter greetingPrinter = new GreetingPrinter(printStream);
+
         BookCollection bookCollection = new BookCollection(books());
         BookListService bookListService = new BookListService(bookCollection, printStream);
 
+        greetingPrinter.greeting();
+
         Menu menu = new Menu();
         menu.addService("1", bookListService);
-
-        bookListService.call();
         printStream.print(menu);
+
+//        bookListService.call();
     }
 
     private static List<Book> books() {
