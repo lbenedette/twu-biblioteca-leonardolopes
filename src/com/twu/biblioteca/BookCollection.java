@@ -15,14 +15,14 @@ public class BookCollection {
     public String listBooks() {
         StringBuilder bookList = new StringBuilder(String.format("%-40s%-40s%-40s\n", "Title", "Author", "Year Published"));
 
-        for (Book book : findAvailableBooks()) {
+        for (Book book : getAvailableBooks()) {
             bookList.append(String.format("%-40s%-40s%-40s\n", book.getFields()));
         }
 
         return bookList.toString();
     }
 
-    public List<Book> findAvailableBooks() {
+    public List<Book> getAvailableBooks() {
         List<Book> availableBooks = new ArrayList<>();
         for (Book book : this.books) {
             if (book.isAvailable()) {
