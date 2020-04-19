@@ -1,7 +1,6 @@
 package com.twu.biblioteca;
 
 import com.twu.biblioteca.exceptions.BookNotFoundException;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,12 +13,13 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
 public class BookCollectionTest {
-    private final Book book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954");
+    private Book book;
     private List<Book> books;
     private BookCollection bookCollection;
 
     @Before
     public void setUp() throws Exception {
+        book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954")
         books = new ArrayList<>();
         bookCollection = new BookCollection(books);
     }
