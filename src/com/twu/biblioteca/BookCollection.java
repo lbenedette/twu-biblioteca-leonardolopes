@@ -1,5 +1,7 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.exceptions.BookNotFoundException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,18 +33,22 @@ public class BookCollection {
         return availableBooks;
     }
 
-    public Book findByTitle(String title) {
+    public Book findByTitle(String title) throws BookNotFoundException {
         for (Book book : books) {
             if (book.getTitle().equals(title)) {
                 return book;
             }
         }
 
-        return null;
+        throw new BookNotFoundException("Book not found!");
     }
 
     public void checkoutBook(String bookTitle) {
-        Book book = findByTitle(bookTitle);
-        book.checkout();
+        try {
+            Book book = findByTitle(bookTitle);
+            book.checkout();
+        } catch (BookNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

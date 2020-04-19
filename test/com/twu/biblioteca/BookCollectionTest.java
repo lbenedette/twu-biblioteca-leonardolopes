@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.exceptions.BookNotFoundException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,7 +54,7 @@ public class BookCollectionTest {
     }
 
     @Test
-    public void findBookByTitleTest() {
+    public void findBookByTitleTest() throws BookNotFoundException {
         books.add(book);
 
         Book foundBook = bookCollection.findByTitle("The Fellowship Of The Ring");
@@ -61,24 +62,13 @@ public class BookCollectionTest {
         assertThat(book, is(foundBook));
     }
 
-    @Test
-    public void returnNullWhenBookDontExistTest() {
-        Book foundBook = bookCollection.findByTitle("The Two Towers");
-
-        assertThat(null, is(foundBook));
+    @Test(expected = BookNotFoundException.class)
+    public void throwExceptionWhenBookDontExistTest() throws BookNotFoundException {
+        bookCollection.findByTitle("The Two Towers");
     }
 
     @Test
     public void checkoutBookAndChangeItAvailableStatusTest() {
-        books.add(book);
-
-        bookCollection.checkoutBook("The Fellowship Of The Ring");
-
-        assertThat(false, is(book.isAvailable()));
-    }
-
-    @Test
-    public void Test() {
         books.add(book);
 
         bookCollection.checkoutBook("The Fellowship Of The Ring");
