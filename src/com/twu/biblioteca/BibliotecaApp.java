@@ -1,17 +1,24 @@
 package com.twu.biblioteca;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import com.twu.biblioteca.services.BookListService;
+
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BibliotecaApp {
 
     public static void main(String[] args) {
-        BookCollection bookCollection = new BookCollection(books());
-        Application app = new Application(bookCollection, new BufferedReader(new InputStreamReader(System.in)));
+        PrintStream printStream = System.out;
 
-        app.run();
+        BookCollection bookCollection = new BookCollection(books());
+        BookListService bookListService = new BookListService(bookCollection, printStream);
+
+        Menu menu = new Menu();
+        menu.addService("1", bookListService);
+
+        bookListService.call();
+        printStream.print(menu);
     }
 
     private static List<Book> books() {

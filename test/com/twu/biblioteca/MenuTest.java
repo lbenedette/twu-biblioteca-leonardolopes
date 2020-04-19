@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
 
 public class MenuTest {
     private Menu menu;
-    FakeService service;
+    private FakeService service;
 
     @Before
     public void setUp() {
