@@ -1,23 +1,44 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.interfaces.Service;
+import com.twu.biblioteca.stubs.FakeService;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.util.LinkedHashMap;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 
 public class MenuTest {
+    private Menu menu;
+    FakeService service;
+
+    @Before
+    public void setUp() {
+        menu = new Menu();
+        service = new FakeService();
+    }
 
     @Test
-    public void printMenuOptionsInToString() {
-        Menu menu = new Menu();
+    public void addServicesWithOptionTests() {
+        LinkedHashMap<String, Service> expected = new LinkedHashMap<>();
+        expected.put("1", service);
 
-        String menuString = "MENU\n" +
-            "1 - List of books\n" +
-            "2 - Checkout book\n" +
-            "0 - Exit application\n" +
+        menu.addService("1", service);
+
+        assertThat(expected, is(menu.getServices()));
+    }
+
+    @Test
+    public void printMenuBasedOnServicesTest() {
+        String expected = "MENU\n" +
+            "1 - Fake Service\n" +
             "\n";
 
-        assertThat(menuString, is(menu.toString()));
+        menu.addService("1", service);
+
+        assertThat(expected, is(menu.toString()));
     }
 }

@@ -1,12 +1,37 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.interfaces.Service;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class Menu {
+    LinkedHashMap<String, Service> services;
+
+    public Menu() {
+        services = new LinkedHashMap<>();
+    }
+
+    public void addService(String option, Service service) {
+        services.put(option, service);
+    }
+
+    public LinkedHashMap<String, Service> getServices() {
+        return services;
+    }
+
     @Override
     public String toString() {
-        return "MENU\n" +
-            "1 - List of books\n" +
-            "2 - Checkout book\n" +
-            "0 - Exit application\n" +
-            "\n";
+        StringBuilder menu = new StringBuilder("MENU\n");
+
+        for (Map.Entry<String, Service> service : services.entrySet()) {
+            menu.append(service.getKey())
+                .append(" - ")
+                .append(service.getValue().getName())
+                .append("\n");
+        }
+
+        menu.append("\n");
+        return menu.toString();
     }
 }
