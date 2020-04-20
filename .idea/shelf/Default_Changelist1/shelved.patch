@@ -1,0 +1,27 @@
+Index: src/com/twu/biblioteca/services/CheckoutBookService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/com/twu/biblioteca/services/CheckoutBookService.java	(date 1587339723155)
++++ src/com/twu/biblioteca/services/CheckoutBookService.java	(date 1587339723155)
+@@ -0,0 +1,19 @@
++package com.twu.biblioteca.services;
++
++import com.twu.biblioteca.interfaces.Service;
++
++public class CheckoutBookService implements Service {
++    public CheckoutBookService() {
++
++    }
++
++    @Override
++    public String getName() {
++        return "Checkout book";
++    }
++
++    @Override
++    public void call() {
++
++    }
++}
