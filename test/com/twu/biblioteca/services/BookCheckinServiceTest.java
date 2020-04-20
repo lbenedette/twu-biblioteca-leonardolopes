@@ -3,6 +3,7 @@ package com.twu.biblioteca.services;
 import com.twu.biblioteca.Book;
 import com.twu.biblioteca.BookCollection;
 import com.twu.biblioteca.BookReader;
+import com.twu.biblioteca.exceptions.BookNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -45,5 +46,27 @@ public class BookCheckinServiceTest {
         bookCheckinService.call();
 
         verify(printStream).println("Thank you for returning the book");
+    }
+
+    @Test
+    public void showErrorMessageWhenTryReturnABookThatIsAlreadyAvailableTest() {
+        Book availableBook = new Book("The Two Towers", "J. R. R. Tolkien", "1945");
+
+        when(bookReader.read()).thenReturn("The Two Towers");
+        when(bookCollection.findByTitle("The Two Towers")).thenReturn(availableBook);
+
+        bookCheckinService.call();
+
+        verify(printStream).println("That is not a valid book to return");
+    }
+
+    @Test
+    public void showErrorMessageWhenBookIsNotFoundTest() {
+        when(bookReader.read()).thenReturn("The Two Towers");
+        when(bookCollection.findByTitle("The Two Towers")).thenThrow(new BookNotFoundException("Book not found!"));
+
+        bookCheckinService.call();
+
+        verify(printStream).println("Book not found!");
     }
 }

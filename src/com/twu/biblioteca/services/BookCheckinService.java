@@ -26,11 +26,18 @@ public class BookCheckinService implements Service {
 
     public void call() {
         try {
-            Book book = bookCollection.findByTitle(bookReader.read());
+            checkinBook(bookCollection.findByTitle(bookReader.read()));
+        } catch (BookNotFoundException e) {
+            printStream.println(e.getMessage());
+        }
+    }
+
+    private void checkinBook(Book book) {
+        if (!book.isAvailable()) {
             book.checkin();
             printStream.println("Thank you for returning the book");
-        } catch (BookNotFoundException e) {
-            e.printStackTrace();
+        } else {
+            printStream.println("That is not a valid book to return");
         }
     }
 }
