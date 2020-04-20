@@ -23,4 +23,13 @@ public class BookTest {
 
         assertThat(book.isAvailable(), is(false));
     }
+
+    @Test
+    public void makeBookAvailableWhenReturnTest() {
+        Book book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954", false);
+
+        book.checkin();
+
+        assertThat(book.isAvailable(), is(true));
+    }
 }

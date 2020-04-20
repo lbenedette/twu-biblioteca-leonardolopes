@@ -13,6 +13,13 @@ public class Book {
         available = true;
     }
 
+    public Book(String title, String author, String yearPublished, boolean available) {
+        this.title = title;
+        this.author = author;
+        this.yearPublished = yearPublished;
+        this.available = available;
+    }
+
     public String[] getFields() {
         return new String[]{title, author, yearPublished};
     }
@@ -27,5 +34,9 @@ public class Book {
 
     public void checkout() {
         available = false;
+    }
+
+    public void checkin() {
+        available = true;
     }
 }
