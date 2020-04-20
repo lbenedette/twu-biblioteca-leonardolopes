@@ -32,7 +32,7 @@ public class BookCheckoutServiceTest {
         when(bookCollection.findByTitle("The Fellowship Of The Ring")).thenReturn(book);
         bookCheckoutService.call();
 
-        assertThat(false, is(book.isAvailable()));
+        assertThat(book.isAvailable(), is(false));
     }
 
 }

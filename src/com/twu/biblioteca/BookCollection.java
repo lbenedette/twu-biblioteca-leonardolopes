@@ -16,7 +16,7 @@ public class BookCollection {
         return books.stream().filter(Book::isAvailable).collect(Collectors.toList());
     }
 
-    public Book findByTitle(String title) throws BookNotFoundException {
+    public Book findByTitle(String title) {
         return books.stream()
             .filter(book -> book.getTitle().equals(title))
             .findFirst()

@@ -20,6 +20,7 @@ public class BibliotecaApp {
         greetingPrinter.greeting();
 
         Menu menu = new Menu(initializeServices());
+//        menu.show();
         printStream.print(menu);
 
 //        bookListService.call();

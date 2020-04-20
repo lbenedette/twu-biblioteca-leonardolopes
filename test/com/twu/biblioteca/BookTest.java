@@ -21,6 +21,6 @@ public class BookTest {
 
         book.checkout();
 
-        assertThat(false, is(book.isAvailable()));
+        assertThat(book.isAvailable(), is(false));
     }
 }

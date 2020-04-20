@@ -36,14 +36,14 @@ public class BookCollectionTest {
     }
 
     @Test
-    public void findBookByTitleTest() throws BookNotFoundException {
+    public void findBookByTitleTest() {
         books.add(book);
 
-        assertThat(book, is(bookCollection.findByTitle("The Fellowship Of The Ring")));
+        assertThat(bookCollection.findByTitle("The Fellowship Of The Ring"), is(book));
     }
 
     @Test(expected = BookNotFoundException.class)
-    public void throwExceptionWhenBookDontExistTest() throws BookNotFoundException {
+    public void throwExceptionWhenBookDontExistTest() {
         bookCollection.findByTitle("The Two Towers");
     }
 }

@@ -15,12 +15,10 @@ public class BookCheckoutService implements Service {
         this.bookReader = bookReader;
     }
 
-    @Override
     public String getName() {
         return "Checkout book";
     }
 
-    @Override
     public void call() {
         try {
             Book book = bookCollection.findByTitle(bookReader.read());
