@@ -2,8 +2,8 @@ package com.twu.biblioteca;
 
 import com.twu.biblioteca.exceptions.BookNotFoundException;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BookCollection {
     private List<Book> books;
@@ -13,23 +13,13 @@ public class BookCollection {
     }
 
     public List<Book> getAvailableBooks() {
-        List<Book> availableBooks = new ArrayList<>();
-        for (Book book : this.books) {
-            if (book.isAvailable()) {
-                availableBooks.add(book);
-            }
-        }
-
-        return availableBooks;
+        return books.stream().filter(Book::isAvailable).collect(Collectors.toList());
     }
 
     public Book findByTitle(String title) throws BookNotFoundException {
-        for (Book book : books) {
-            if (book.getTitle().equals(title)) {
-                return book;
-            }
-        }
-
-        throw new BookNotFoundException("Book not found!");
+        return books.stream()
+            .filter(book -> book.getTitle().equals(title))
+            .findFirst()
+            .orElseThrow(() -> new BookNotFoundException("Book not found!"));
     }
 }

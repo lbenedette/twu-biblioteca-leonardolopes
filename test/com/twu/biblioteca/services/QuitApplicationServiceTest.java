@@ -1,6 +1,5 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.services;
 
-import com.twu.biblioteca.services.QuitApplicationService;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;

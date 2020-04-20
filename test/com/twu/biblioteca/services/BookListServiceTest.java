@@ -1,5 +1,7 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.services;
 
+import com.twu.biblioteca.Book;
+import com.twu.biblioteca.BookCollection;
 import com.twu.biblioteca.services.BookListService;
 import org.junit.Before;
 import org.junit.Test;
