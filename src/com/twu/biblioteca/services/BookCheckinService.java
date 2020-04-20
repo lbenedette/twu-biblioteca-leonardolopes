@@ -6,14 +6,18 @@ import com.twu.biblioteca.BookReader;
 import com.twu.biblioteca.exceptions.BookNotFoundException;
 import com.twu.biblioteca.interfaces.Service;
 
+import java.io.PrintStream;
+
 
 public class BookCheckinService implements Service {
     private BookCollection bookCollection;
     private BookReader bookReader;
+    private PrintStream printStream;
 
-    public BookCheckinService(BookCollection bookCollection, BookReader bookReader) {
+    public BookCheckinService(BookCollection bookCollection, BookReader bookReader, PrintStream printStream) {
         this.bookCollection = bookCollection;
         this.bookReader = bookReader;
+        this.printStream = printStream;
     }
 
     public String getName() {
@@ -24,6 +28,7 @@ public class BookCheckinService implements Service {
         try {
             Book book = bookCollection.findByTitle(bookReader.read());
             book.checkin();
+            printStream.println("Thank you for returning the book");
         } catch (BookNotFoundException e) {
             e.printStackTrace();
         }
