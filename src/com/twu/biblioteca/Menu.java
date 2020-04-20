@@ -2,14 +2,17 @@ package com.twu.biblioteca;
 
 import com.twu.biblioteca.interfaces.Service;
 
+import java.io.PrintStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Menu {
     LinkedHashMap<String, Service> services;
+    PrintStream printStream;
 
-    public Menu(LinkedHashMap<String, Service> services) {
+    public Menu(LinkedHashMap<String, Service> services, PrintStream printStream) {
         this.services = services;
+        this.printStream = printStream;
     }
 
     public void addService(String option, Service service) {
@@ -20,8 +23,11 @@ public class Menu {
         return services;
     }
 
-    @Override
-    public String toString() {
+    public void show() {
+        printStream.println(menuString());
+    }
+
+    private String menuString() {
         StringBuilder menu = new StringBuilder("MENU\n");
 
         for (Map.Entry<String, Service> service : services.entrySet()) {
@@ -31,7 +37,6 @@ public class Menu {
                 .append("\n");
         }
 
-        menu.append("\n");
         return menu.toString();
     }
 }

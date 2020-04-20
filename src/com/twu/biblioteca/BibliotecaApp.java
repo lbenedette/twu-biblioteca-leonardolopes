@@ -19,9 +19,8 @@ public class BibliotecaApp {
         GreetingPrinter greetingPrinter = new GreetingPrinter(printStream);
         greetingPrinter.greeting();
 
-        Menu menu = new Menu(initializeServices());
-//        menu.show();
-        printStream.print(menu);
+        Menu menu = new Menu(initializeServices(), printStream);
+        menu.show();
 
 //        bookListService.call();
 //        bookCheckoutService.call();
