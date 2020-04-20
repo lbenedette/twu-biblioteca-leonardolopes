@@ -7,8 +7,10 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class BookCollectionTest {
     private Book book;
@@ -23,6 +25,17 @@ public class BookCollectionTest {
     }
 
     @Test
+    public void getOnlyAvailableBooksTest() {
+        books.add(book);
+        Book checkedBook = mock(Book.class);
+        books.add(checkedBook);
+
+        when(checkedBook.isAvailable()).thenReturn(false);
+
+        assertThat(bookCollection.getAvailableBooks(), not(hasItem(checkedBook)));
+    }
+
+    @Test
     public void findBookByTitleTest() throws BookNotFoundException {
         books.add(book);
 
@@ -32,14 +45,5 @@ public class BookCollectionTest {
     @Test(expected = BookNotFoundException.class)
     public void throwExceptionWhenBookDontExistTest() throws BookNotFoundException {
         bookCollection.findByTitle("The Two Towers");
-    }
-
-    @Test
-    public void checkoutBookAndChangeItAvailableStatusTest() {
-        books.add(book);
-
-        bookCollection.checkoutBook("The Fellowship Of The Ring");
-
-        assertThat(false, is(book.isAvailable()));
     }
 }
