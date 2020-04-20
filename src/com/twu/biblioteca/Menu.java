@@ -23,6 +23,11 @@ public class Menu {
         return services;
     }
 
+    public void callService(String option) {
+        Service service = services.get(option);
+        service.call();
+    }
+
     public void show() {
         printStream.println(menuString());
     }
