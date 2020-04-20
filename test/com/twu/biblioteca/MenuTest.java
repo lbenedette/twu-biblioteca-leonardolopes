@@ -21,10 +21,10 @@ public class MenuTest {
 
     @Before
     public void setUp() {
+        services = new LinkedHashMap<>();
+
         printStream = mock(PrintStream.class);
         fakeService = mock(FakeService.class);
-
-        services = new LinkedHashMap<>();
 
         menu = new Menu(services, printStream);
     }
@@ -59,5 +59,12 @@ public class MenuTest {
         menu.callService("1");
 
         verify(fakeService).call();
+    }
+
+    @Test
+    public void showErrorMessageWhenEnterAInvalidOptionTest() {
+        menu.callService("1");
+
+        verify(printStream).println("Please select a valid option!");
     }
 }

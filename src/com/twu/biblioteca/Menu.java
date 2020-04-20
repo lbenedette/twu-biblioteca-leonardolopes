@@ -24,8 +24,12 @@ public class Menu {
     }
 
     public void callService(String option) {
-        Service service = services.get(option);
-        service.call();
+        try {
+            Service service = services.get(option);
+            service.call();
+        } catch (NullPointerException e) {
+            printStream.println("Please select a valid option!");
+        }
     }
 
     public void show() {
