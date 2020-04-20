@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 
 import com.twu.biblioteca.services.BookCheckoutService;
 import com.twu.biblioteca.services.BookListService;
+import com.twu.biblioteca.services.QuitApplicationService;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -18,18 +19,21 @@ public class BibliotecaApp {
         GreetingPrinter greetingPrinter = new GreetingPrinter(printStream);
 
         BookCollection bookCollection = new BookCollection(books());
+
         BookListService bookListService = new BookListService(bookCollection, printStream);
         BookCheckoutService bookCheckoutService = new BookCheckoutService(bookCollection, bookReader);
+        QuitApplicationService quitApplicationService = new QuitApplicationService();
 
         greetingPrinter.greeting();
 
         Menu menu = new Menu();
         menu.addService("1", bookListService);
         menu.addService("2", bookCheckoutService);
+        menu.addService("0", quitApplicationService);
         printStream.print(menu);
 
 //        bookListService.call();
-        bookCheckoutService.call();
+//        bookCheckoutService.call();
     }
 
     private static List<Book> books() {
