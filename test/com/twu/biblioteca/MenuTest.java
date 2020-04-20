@@ -12,12 +12,14 @@ import static org.junit.Assert.assertThat;
 
 
 public class MenuTest {
+    private LinkedHashMap<String, Service> services;
     private Menu menu;
     private FakeService service;
 
     @Before
     public void setUp() {
-        menu = new Menu();
+        services = new LinkedHashMap<>();
+        menu = new Menu(services);
         service = new FakeService();
     }
 
@@ -28,7 +30,7 @@ public class MenuTest {
 
         menu.addService("1", service);
 
-        assertThat(expected, is(menu.getServices()));
+        assertThat(menu.getServices(), is(expected));
     }
 
     @Test
@@ -39,6 +41,6 @@ public class MenuTest {
 
         menu.addService("1", service);
 
-        assertThat(expected, is(menu.toString()));
+        assertThat(menu.toString(), is(expected));
     }
 }

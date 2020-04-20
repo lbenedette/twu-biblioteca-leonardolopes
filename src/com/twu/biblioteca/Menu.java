@@ -8,8 +8,8 @@ import java.util.Map;
 public class Menu {
     LinkedHashMap<String, Service> services;
 
-    public Menu() {
-        services = new LinkedHashMap<>();
+    public Menu(LinkedHashMap<String, Service> services) {
+        this.services = services;
     }
 
     public void addService(String option, Service service) {
