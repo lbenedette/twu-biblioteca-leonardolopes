@@ -12,16 +12,6 @@ public class BookCollection {
         this.books = books;
     }
 
-    public String listBooks() {
-        StringBuilder bookList = new StringBuilder(String.format("%-40s%-40s%-40s\n", "Title", "Author", "Year Published"));
-
-        for (Book book : getAvailableBooks()) {
-            bookList.append(String.format("%-40s%-40s%-40s\n", book.getFields()));
-        }
-
-        return bookList.toString();
-    }
-
     public List<Book> getAvailableBooks() {
         List<Book> availableBooks = new ArrayList<>();
         for (Book book : this.books) {
@@ -41,14 +31,5 @@ public class BookCollection {
         }
 
         throw new BookNotFoundException("Book not found!");
-    }
-
-    public void checkoutBook(String bookTitle) {
-        try {
-            Book book = findByTitle(bookTitle);
-            book.checkout();
-        } catch (BookNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 }

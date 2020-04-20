@@ -62,21 +62,21 @@ public class ApplicationTest {
         assertThat(outContent.toString(), is(menuString.toString()));
     }
 
-    @Test
-    public void shouldListBookWhenUserChooseListOfBooks() throws IOException {
-        String option = "1";
-        app.executeAction(option);
-
-        verify(bookCollection).listBooks();
-    }
-
-    @Test
-    public void shouldAskForBookTitleWhenUserChooseCheckoutBook() throws IOException {
-        String option = "2";
-        app.executeAction(option);
-
-        verify(bookCollection).listBooks();
-    }
+//    @Test
+//    public void shouldListBookWhenUserChooseListOfBooks() throws IOException {
+//        String option = "1";
+//        app.executeAction(option);
+//
+//        verify(bookCollection).listBooks();
+//    }
+//
+//    @Test
+//    public void shouldAskForBookTitleWhenUserChooseCheckoutBook() throws IOException {
+//        String option = "2";
+//        app.executeAction(option);
+//
+//        verify(bookCollection).listBooks();
+//    }
 
     @Test
     public void shouldShowAErrorMessageWhenEnteredAInvalidOption() throws IOException {

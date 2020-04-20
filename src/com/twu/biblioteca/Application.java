@@ -54,9 +54,9 @@ public class Application {
             case "0":
                 System.exit(0);
                 break;
-            case "1":
-                bookCollection.listBooks();
-                break;
+//            case "1":
+//                bookCollection.listBooks();
+//                break;
             default:
                 System.out.println("Please select a valid option!");
         }
