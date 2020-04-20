@@ -3,6 +3,7 @@ package com.twu.biblioteca.services;
 import com.twu.biblioteca.Book;
 import com.twu.biblioteca.BookCollection;
 import com.twu.biblioteca.BookReader;
+import com.twu.biblioteca.exceptions.BookNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,5 +45,14 @@ public class BookCheckoutServiceTest {
         bookCheckoutService.call();
 
         verify(printStream).println("Thank you! Enjoy the book");
+    }
+
+    @Test
+    public void showErrorMessageAfterCantCheckoutABookTest() {
+        when(bookReader.read()).thenReturn("The Fellowship Of The Ring");
+        when(bookCollection.findByTitle("The Fellowship Of The Ring")).thenThrow(new BookNotFoundException("Book not found!"));
+        bookCheckoutService.call();
+
+        verify(printStream).println("Sorry, that book is not available");
     }
 }

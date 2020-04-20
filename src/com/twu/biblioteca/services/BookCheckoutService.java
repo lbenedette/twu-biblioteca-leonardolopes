@@ -29,7 +29,7 @@ public class BookCheckoutService implements Service {
             book.checkout();
             printStream.println("Thank you! Enjoy the book");
         } catch (BookNotFoundException e) {
-            e.printStackTrace();
+            printStream.println("Sorry, that book is not available");
         }
     }
 }
