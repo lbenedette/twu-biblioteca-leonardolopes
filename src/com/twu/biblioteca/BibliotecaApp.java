@@ -36,7 +36,7 @@ public class BibliotecaApp {
         BookReader bookReader = new BookReader(printStream, bufferedReader);
 
         services.put("1", new BookListService(bookCollection, printStream));
-        services.put("2", new BookCheckoutService(bookCollection, bookReader));
+        services.put("2", new BookCheckoutService(bookCollection, bookReader, printStream));
         services.put("0", new QuitApplicationService());
 
         return services;
