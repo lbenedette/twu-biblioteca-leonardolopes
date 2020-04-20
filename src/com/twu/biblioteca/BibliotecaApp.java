@@ -14,23 +14,26 @@ import java.util.List;
 
 public class BibliotecaApp {
     private static final PrintStream printStream = System.out;
+    private static final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
     public static void main(String[] args) {
         GreetingPrinter greetingPrinter = new GreetingPrinter(printStream);
         greetingPrinter.greeting();
 
         Menu menu = new Menu(initializeServices(), printStream);
-        menu.show();
+        InputReader inputReader = new InputReader(printStream, bufferedReader);
 
-//        bookListService.call();
-//        bookCheckoutService.call();
+        while (true) {
+            menu.show();
+            menu.callService(inputReader.read());
+        }
     }
 
     private static LinkedHashMap<String, Service> initializeServices() {
         LinkedHashMap<String, Service> services = new LinkedHashMap<>();
 
         BookCollection bookCollection = new BookCollection(books());
-        BookReader bookReader = new BookReader(printStream, new BufferedReader(new InputStreamReader(System.in)));
+        BookReader bookReader = new BookReader(printStream, bufferedReader);
 
         services.put("1", new BookListService(bookCollection, printStream));
         services.put("2", new BookCheckoutService(bookCollection, bookReader));
