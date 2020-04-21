@@ -10,7 +10,7 @@ public class MovieTest {
     @Test
     public void returnVarInArrayFormatTest() {
         String[] expected = new String[]{"The Matrix", "1999", "The Wachowskis", "9"};
-        Movie movie = new Movie("The Matrix", "1999", "The Wachowskis", "9");
+        Movie movie = new Movie("The Matrix", "1999", "The Wachowskis", "9", true);
 
         assertThat(movie.varsToArray(), is(expected));
     }

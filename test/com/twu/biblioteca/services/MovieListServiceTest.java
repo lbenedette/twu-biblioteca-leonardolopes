@@ -20,7 +20,7 @@ public class MovieListServiceTest {
         List<Movie> movies = new ArrayList<>();
         PrintStream printStream = mock(PrintStream.class);
         MovieListService movieListService = new MovieListService(movies, printStream);
-        movies.add(new Movie("The Matrix", "1999", "The Wachowskis", "9"));
+        movies.add(new Movie("The Matrix", "1999", "The Wachowskis", "9", true));
 
         movieListService.call();
 

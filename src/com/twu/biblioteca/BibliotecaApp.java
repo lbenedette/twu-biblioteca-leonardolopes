@@ -39,12 +39,15 @@ public class BibliotecaApp {
 
         BookCollection bookCollection = new BookCollection(books());
         InputReader bookReader = new InputReader(printStream, scanner, INPUT_BOOK_TITLE_MESSAGE);
-//        InputReader movieReader = new InputReader(printStream, scanner, INPUT_BOOK_TITLE_MESSAGE);
+        InputReader movieReader = new InputReader(printStream, scanner, INPUT_MOVIE_TITLE_MESSAGE);
+
+        List<Movie> movies = movies();
 
         services.put("1", new BookListService(bookCollection, printStream));
         services.put("2", new BookCheckoutService(bookCollection, bookReader, printStream));
         services.put("3", new BookCheckinService(bookCollection, bookReader, printStream));
-        services.put("a", new MovieListService(movies(), printStream));
+        services.put("4", new MovieListService(movies, printStream));
+        services.put("5", new MovieCheckoutService(movies, movieReader, printStream));
         services.put("q", new QuitApplicationService());
 
         return services;
@@ -61,7 +64,7 @@ public class BibliotecaApp {
 
     private static List<Movie> movies() {
         List<Movie> movies = new ArrayList<>();
-        movies.add(new Movie("The Matrix", "1999", "The Wachowskis", "9"));
+        movies.add(new Movie("The Matrix", "1999", "The Wachowskis", "9", true));
 
         return movies;
     }
