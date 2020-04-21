@@ -44,7 +44,9 @@ public class BibliotecaApp {
 
     private static List<Book> books() {
         List<Book> books = new ArrayList<>();
-        books.add(new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954"));
+        books.add(new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954", true));
+        books.add(new Book("The Two Towers", "J. R. R. Tolkien", "1954", true));
+        books.add(new Book("The Return Of The King", "J. R. R. Tolkien", "1955", true));
 
         return books;
     }

@@ -13,7 +13,9 @@ public class BookCollection {
     }
 
     public List<Book> getAvailableBooks() {
-        return books.stream().filter(Book::isAvailable).collect(Collectors.toList());
+        return books.stream()
+            .filter(Book::isAvailable)
+            .collect(Collectors.toList());
     }
 
     public Book findByTitle(String title) {

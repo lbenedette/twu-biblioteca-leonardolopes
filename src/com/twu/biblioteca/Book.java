@@ -6,13 +6,6 @@ public class Book {
     private String yearPublished;
     private boolean available;
 
-    public Book(String title, String author, String yearPublished) {
-        this.title = title;
-        this.author = author;
-        this.yearPublished = yearPublished;
-        available = true;
-    }
-
     public Book(String title, String author, String yearPublished, boolean available) {
         this.title = title;
         this.author = author;

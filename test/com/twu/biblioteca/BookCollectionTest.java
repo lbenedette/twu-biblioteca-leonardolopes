@@ -19,7 +19,7 @@ public class BookCollectionTest {
 
     @Before
     public void setUp() {
-        book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954");
+        book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954", true);
         books = new ArrayList<>();
         bookCollection = new BookCollection(books);
     }

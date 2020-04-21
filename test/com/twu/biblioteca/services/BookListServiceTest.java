@@ -21,7 +21,7 @@ public class BookListServiceTest {
     @Before
     public void setUp() {
         books = new ArrayList<>();
-        books.add(new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954"));
+        books.add(new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954", true));
 
         bookCollection = mock(BookCollection.class);
         printStream = mock(PrintStream.class);

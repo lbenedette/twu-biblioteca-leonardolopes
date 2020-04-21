@@ -50,7 +50,7 @@ public class BookCheckinServiceTest {
 
     @Test
     public void showErrorMessageWhenTryReturnABookThatIsAlreadyAvailableTest() {
-        Book availableBook = new Book("The Two Towers", "J. R. R. Tolkien", "1945");
+        Book availableBook = new Book("The Two Towers", "J. R. R. Tolkien", "1945", true);
 
         when(bookReader.read()).thenReturn("The Two Towers");
         when(bookCollection.findByTitle("The Two Towers")).thenReturn(availableBook);

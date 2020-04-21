@@ -15,7 +15,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 public class BookCheckoutServiceTest {
-    private final Book book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954");
+    private Book book;
     private BookCollection bookCollection;
     private BookReader bookReader;
     private PrintStream printStream;
@@ -23,6 +23,7 @@ public class BookCheckoutServiceTest {
 
     @Before
     public void setUp() {
+        book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954", true);
         bookCollection = mock(BookCollection.class);
         bookReader = mock(BookReader.class);
         printStream = mock(PrintStream.class);

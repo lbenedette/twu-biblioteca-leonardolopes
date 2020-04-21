@@ -9,7 +9,7 @@ public class BookTest {
 
     @Test
     public void returnAllFieldsAsArrayTest() {
-        Book book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954");
+        Book book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954", true);
 
         String[] fields = book.getFields();
         assertThat(fields, is(new String[]{"The Fellowship Of The Ring", "J. R. R. Tolkien", "1954"}));
@@ -17,7 +17,7 @@ public class BookTest {
 
     @Test
     public void makeBookUnavailableWhenCheckoutTest() {
-        Book book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954");
+        Book book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954", true);
 
         book.checkout();
 
