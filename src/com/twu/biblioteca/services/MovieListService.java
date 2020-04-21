@@ -27,6 +27,7 @@ public class MovieListService implements Service {
         StringBuilder movieList = new StringBuilder(String.format("%-40s%-40s%-40s%-40s\n", "Title", "Year", "Director", "Rating"));
 
         movies.stream()
+            .filter(Movie::isAvailable)
             .forEach(movie -> movieList.append(String.format("%-40s%-40s%-40s%-40s\n", movie.varsToArray())));
 
         return movieList.toString();
