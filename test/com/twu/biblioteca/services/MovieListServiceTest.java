@@ -24,6 +24,6 @@ public class MovieListServiceTest {
 
         movieListService.call();
 
-        verify(printStream).println(expected);
+        verify(printStream).print(expected);
     }
 }

@@ -1,30 +1,23 @@
 package com.twu.biblioteca;
 
-import java.io.BufferedReader;
-import java.io.IOException;
+import com.twu.biblioteca.interfaces.Reader;
+
 import java.io.PrintStream;
+import java.util.Scanner;
 
-public class InputReader {
+public class InputReader implements Reader {
     private final PrintStream printStream;
-    private final BufferedReader bufferedReader;
+    private final Scanner scanner;
+    private final String message;
 
-    public InputReader(PrintStream printStream, BufferedReader bufferedReader) {
+    public InputReader(PrintStream printStream, Scanner scanner, String message) {
         this.printStream = printStream;
-        this.bufferedReader = bufferedReader;
+        this.scanner = scanner;
+        this.message = message;
     }
 
     public String read() {
-        printStream.println("Enter a option: ");
-        return readLine();
-    }
-
-    private String readLine() {
-        String book = null;
-        try {
-            book = bufferedReader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return book;
+        printStream.println(message);
+        return scanner.nextLine();
     }
 }

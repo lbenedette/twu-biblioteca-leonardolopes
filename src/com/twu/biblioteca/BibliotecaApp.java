@@ -2,31 +2,30 @@ package com.twu.biblioteca;
 
 import com.twu.biblioteca.book.Book;
 import com.twu.biblioteca.book.BookCollection;
-import com.twu.biblioteca.book.BookReader;
 import com.twu.biblioteca.interfaces.Service;
-import com.twu.biblioteca.services.BookCheckinService;
-import com.twu.biblioteca.services.BookCheckoutService;
-import com.twu.biblioteca.services.BookListService;
-import com.twu.biblioteca.services.QuitApplicationService;
+import com.twu.biblioteca.services.*;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Scanner;
 
 public class BibliotecaApp {
     private static final PrintStream printStream = System.out;
-    private static final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    private static final Scanner scanner = new Scanner(System.in);
+
+    private static final String INPUT_OPTION_MESSAGE = "Enter a option: ";
+    private static final String INPUT_BOOK_TITLE_MESSAGE = "Enter a book title: ";
+    private static final String INPUT_MOVIE_TITLE_MESSAGE = "Enter a movie title: ";
 
     public static void main(String[] args) {
         GreetingPrinter greetingPrinter = new GreetingPrinter(printStream);
         greetingPrinter.greeting();
 
         Menu menu = new Menu(initializeServices(), printStream);
-        InputReader inputReader = new InputReader(printStream, bufferedReader);
+        InputReader inputReader = new InputReader(printStream, scanner, INPUT_OPTION_MESSAGE);
 
         while (true) {
             menu.show();
@@ -39,12 +38,14 @@ public class BibliotecaApp {
         LinkedHashMap<String, Service> services = new LinkedHashMap<>();
 
         BookCollection bookCollection = new BookCollection(books());
-        BookReader bookReader = new BookReader(printStream, bufferedReader);
+        InputReader bookReader = new InputReader(printStream, scanner, INPUT_BOOK_TITLE_MESSAGE);
+//        InputReader movieReader = new InputReader(printStream, scanner, INPUT_BOOK_TITLE_MESSAGE);
 
         services.put("1", new BookListService(bookCollection, printStream));
         services.put("2", new BookCheckoutService(bookCollection, bookReader, printStream));
         services.put("3", new BookCheckinService(bookCollection, bookReader, printStream));
-        services.put("0", new QuitApplicationService());
+        services.put("a", new MovieListService(movies(), printStream));
+        services.put("q", new QuitApplicationService());
 
         return services;
     }
@@ -58,12 +59,15 @@ public class BibliotecaApp {
         return books;
     }
 
+    private static List<Movie> movies() {
+        List<Movie> movies = new ArrayList<>();
+        movies.add(new Movie("The Matrix", "1999", "The Wachowskis", "9"));
+
+        return movies;
+    }
+
     private static void pressAnyKeyToContinue() {
-        try {
-            printStream.print("\n...");
-            bufferedReader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        printStream.print("\n...");
+        scanner.nextLine();
     }
 }

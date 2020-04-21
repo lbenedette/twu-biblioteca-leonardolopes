@@ -20,7 +20,7 @@ public class MovieListService implements Service {
     }
 
     public void call() {
-        printStream.println(movieList());
+        printStream.print(movieList());
     }
 
     private String movieList() {

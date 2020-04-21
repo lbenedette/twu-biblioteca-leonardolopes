@@ -2,8 +2,8 @@ package com.twu.biblioteca.services;
 
 import com.twu.biblioteca.book.Book;
 import com.twu.biblioteca.book.BookCollection;
-import com.twu.biblioteca.book.BookReader;
 import com.twu.biblioteca.exceptions.BookNotFoundException;
+import com.twu.biblioteca.fakes.FakeReader;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,21 +16,21 @@ import static org.mockito.Mockito.*;
 public class BookCheckinServiceTest {
     private final Book book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954", false);
     private BookCollection bookCollection;
-    private BookReader bookReader;
+    private FakeReader fakeReader;
     private PrintStream printStream;
     private BookCheckinService bookCheckinService;
 
     @Before
     public void setUp() {
         bookCollection = mock(BookCollection.class);
-        bookReader = mock(BookReader.class);
+        fakeReader = mock(FakeReader.class);
         printStream = mock(PrintStream.class);
-        bookCheckinService = new BookCheckinService(bookCollection, bookReader, printStream);
+        bookCheckinService = new BookCheckinService(bookCollection, fakeReader, printStream);
     }
 
     @Test
     public void checkinBookAndMakeAvailableTest() {
-        when(bookReader.read()).thenReturn("The Fellowship Of The Ring");
+        when(fakeReader.read()).thenReturn("The Fellowship Of The Ring");
         when(bookCollection.findByTitle("The Fellowship Of The Ring")).thenReturn(book);
 
         bookCheckinService.call();
@@ -40,7 +40,7 @@ public class BookCheckinServiceTest {
 
     @Test
     public void showSuccessfulMessageWhenReturnABookTest() {
-        when(bookReader.read()).thenReturn("The Fellowship Of The Ring");
+        when(fakeReader.read()).thenReturn("The Fellowship Of The Ring");
         when(bookCollection.findByTitle("The Fellowship Of The Ring")).thenReturn(book);
 
         bookCheckinService.call();
@@ -52,7 +52,7 @@ public class BookCheckinServiceTest {
     public void showErrorMessageWhenTryReturnABookThatIsAlreadyAvailableTest() {
         Book availableBook = new Book("The Two Towers", "J. R. R. Tolkien", "1945", true);
 
-        when(bookReader.read()).thenReturn("The Two Towers");
+        when(fakeReader.read()).thenReturn("The Two Towers");
         when(bookCollection.findByTitle("The Two Towers")).thenReturn(availableBook);
 
         bookCheckinService.call();
@@ -62,7 +62,7 @@ public class BookCheckinServiceTest {
 
     @Test
     public void showErrorMessageWhenBookIsNotFoundTest() {
-        when(bookReader.read()).thenReturn("The Two Towers");
+        when(fakeReader.read()).thenReturn("The Two Towers");
         when(bookCollection.findByTitle("The Two Towers")).thenThrow(new BookNotFoundException("Book not found!"));
 
         bookCheckinService.call();

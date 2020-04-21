@@ -2,8 +2,8 @@ package com.twu.biblioteca.services;
 
 import com.twu.biblioteca.book.Book;
 import com.twu.biblioteca.book.BookCollection;
-import com.twu.biblioteca.book.BookReader;
 import com.twu.biblioteca.exceptions.BookNotFoundException;
+import com.twu.biblioteca.fakes.FakeReader;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 public class BookCheckoutServiceTest {
     private Book book;
     private BookCollection bookCollection;
-    private BookReader bookReader;
+    private FakeReader fakeReader;
     private PrintStream printStream;
     private BookCheckoutService bookCheckoutService;
 
@@ -25,16 +25,16 @@ public class BookCheckoutServiceTest {
     public void setUp() {
         book = mock(Book.class);
         bookCollection = mock(BookCollection.class);
-        bookReader = mock(BookReader.class);
+        fakeReader = mock(FakeReader.class);
         printStream = mock(PrintStream.class);
-        bookCheckoutService = new BookCheckoutService(bookCollection, bookReader, printStream);
+        bookCheckoutService = new BookCheckoutService(bookCollection, fakeReader, printStream);
     }
 
     @Test
     public void checkoutBookAndChangeItAvailableStatusTest() {
         Book book = new Book("The Fellowship Of The Ring", "J. R. R. Tolkien", "1954", true);
 
-        when(bookReader.read()).thenReturn("The Fellowship Of The Ring");
+        when(fakeReader.read()).thenReturn("The Fellowship Of The Ring");
         when(bookCollection.findByTitle("The Fellowship Of The Ring")).thenReturn(book);
 
         bookCheckoutService.call();
@@ -44,7 +44,7 @@ public class BookCheckoutServiceTest {
 
     @Test
     public void showSuccessfulMessageAfterCheckoutABookTest() {
-        when(bookReader.read()).thenReturn("The Fellowship Of The Ring");
+        when(fakeReader.read()).thenReturn("The Fellowship Of The Ring");
         when(bookCollection.findByTitle("The Fellowship Of The Ring")).thenReturn(book);
         when(book.isAvailable()).thenReturn(true);
 
@@ -55,7 +55,7 @@ public class BookCheckoutServiceTest {
 
     @Test
     public void showErrorMessageAfterCantCheckoutABookTest() {
-        when(bookReader.read()).thenReturn("The Fellowship Of The Ring");
+        when(fakeReader.read()).thenReturn("The Fellowship Of The Ring");
         when(bookCollection.findByTitle("The Fellowship Of The Ring")).thenReturn(book);
         when(book.isAvailable()).thenReturn(false);
 
@@ -66,7 +66,7 @@ public class BookCheckoutServiceTest {
 
     @Test
     public void showErrorMessageWhenBookIsNotFoundTest() {
-        when(bookReader.read()).thenReturn("The Two Towers");
+        when(fakeReader.read()).thenReturn("The Two Towers");
         when(bookCollection.findByTitle("The Two Towers")).thenThrow(new BookNotFoundException("Book not found!"));
 
         bookCheckoutService.call();
