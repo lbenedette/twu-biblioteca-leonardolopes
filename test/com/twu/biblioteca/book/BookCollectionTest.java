@@ -1,5 +1,7 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.book;
 
+import com.twu.biblioteca.book.Book;
+import com.twu.biblioteca.book.BookCollection;
 import com.twu.biblioteca.exceptions.BookNotFoundException;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.twu.biblioteca.stubs;
+package com.twu.biblioteca.fakes;
 
 import com.twu.biblioteca.interfaces.Service;
 

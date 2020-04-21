@@ -1,7 +1,7 @@
 package com.twu.biblioteca;
 
 import com.twu.biblioteca.interfaces.Service;
-import com.twu.biblioteca.stubs.FakeService;
+import com.twu.biblioteca.fakes.FakeService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,16 +27,6 @@ public class MenuTest {
         fakeService = mock(FakeService.class);
 
         menu = new Menu(services, printStream);
-    }
-
-    @Test
-    public void addServicesWithOptionTests() {
-        LinkedHashMap<String, Service> expected = new LinkedHashMap<>();
-        expected.put("1", fakeService);
-
-        menu.addService("1", fakeService);
-
-        assertThat(menu.getServices(), is(expected));
     }
 
     @Test

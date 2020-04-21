@@ -1,11 +1,16 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.book.Book;
+import com.twu.biblioteca.book.BookCollection;
+import com.twu.biblioteca.book.BookReader;
 import com.twu.biblioteca.interfaces.Service;
+import com.twu.biblioteca.services.BookCheckinService;
 import com.twu.biblioteca.services.BookCheckoutService;
 import com.twu.biblioteca.services.BookListService;
 import com.twu.biblioteca.services.QuitApplicationService;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -26,6 +31,7 @@ public class BibliotecaApp {
         while (true) {
             menu.show();
             menu.callService(inputReader.read());
+            pressAnyKeyToContinue();
         }
     }
 
@@ -37,6 +43,7 @@ public class BibliotecaApp {
 
         services.put("1", new BookListService(bookCollection, printStream));
         services.put("2", new BookCheckoutService(bookCollection, bookReader, printStream));
+        services.put("3", new BookCheckinService(bookCollection, bookReader, printStream));
         services.put("0", new QuitApplicationService());
 
         return services;
@@ -49,5 +56,14 @@ public class BibliotecaApp {
         books.add(new Book("The Return Of The King", "J. R. R. Tolkien", "1955", true));
 
         return books;
+    }
+
+    private static void pressAnyKeyToContinue() {
+        try {
+            printStream.print("\n...");
+            bufferedReader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

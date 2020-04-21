@@ -1,8 +1,8 @@
 package com.twu.biblioteca.services;
 
-import com.twu.biblioteca.Book;
-import com.twu.biblioteca.BookCollection;
-import com.twu.biblioteca.BookReader;
+import com.twu.biblioteca.book.Book;
+import com.twu.biblioteca.book.BookCollection;
+import com.twu.biblioteca.book.BookReader;
 import com.twu.biblioteca.exceptions.BookNotFoundException;
 import com.twu.biblioteca.interfaces.Service;
 
@@ -25,10 +25,17 @@ public class BookCheckoutService implements Service {
 
     public void call() {
         try {
-            Book book = bookCollection.findByTitle(bookReader.read());
+            checkoutBook(bookCollection.findByTitle(bookReader.read()));
+        } catch (BookNotFoundException e) {
+            printStream.println(e.getMessage());
+        }
+    }
+
+    private void checkoutBook(Book book) {
+        if (book.isAvailable()) {
             book.checkout();
             printStream.println("Thank you! Enjoy the book");
-        } catch (BookNotFoundException e) {
+        } else {
             printStream.println("Sorry, that book is not available");
         }
     }

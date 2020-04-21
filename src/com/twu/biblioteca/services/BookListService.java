@@ -1,7 +1,7 @@
 package com.twu.biblioteca.services;
 
-import com.twu.biblioteca.Book;
-import com.twu.biblioteca.BookCollection;
+import com.twu.biblioteca.book.Book;
+import com.twu.biblioteca.book.BookCollection;
 import com.twu.biblioteca.interfaces.Service;
 
 import java.io.PrintStream;
