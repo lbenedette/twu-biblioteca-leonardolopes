@@ -2,6 +2,8 @@ package com.twu.biblioteca.services;
 
 import com.twu.biblioteca.Authenticator;
 import com.twu.biblioteca.User;
+import com.twu.biblioteca.exceptions.InvalidPasswordException;
+import com.twu.biblioteca.exceptions.UserNotFoundException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,5 +55,38 @@ public class AuthenticationServiceTest {
         authenticationService.call();
 
         assertThat(authenticationService.getUser(), is(user));
+    }
+
+    @Test
+    public void showSuccessfulMessageWhenUserLoggedTest() {
+        in.provideLines("123-1234", "verycomplicatedpassword");
+
+        when(authenticator.authenticate("123-1234", "verycomplicatedpassword")).thenReturn(user);
+
+        authenticationService.call();
+
+        verify(printStream, times(1)).println("Welcome! You logged with success!");
+    }
+
+    @Test
+    public void showErrorMessageWhenLibraryNumberDontExistTest() {
+        in.provideLines("111-1111", "verycomplicatedpassword");
+
+        when(authenticator.authenticate("111-1111", "verycomplicatedpassword")).thenThrow(new UserNotFoundException("User not found!"));
+
+        authenticationService.call();
+
+        verify(printStream, times(1)).println("User not found!");
+    }
+
+    @Test
+    public void showErrorMessageWhenPasswordIsInvalidTest() {
+        in.provideLines("123-1234", "invalidpassword");
+
+        when(authenticator.authenticate("123-1234", "invalidpassword")).thenThrow(new InvalidPasswordException("Password is invalid!"));
+
+        authenticationService.call();
+
+        verify(printStream, times(1)).println("Password is invalid!");
     }
 }

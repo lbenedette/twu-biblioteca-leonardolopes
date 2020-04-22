@@ -28,7 +28,12 @@ public class AuthenticationService implements Service {
     }
 
     public void call() {
-        user = authenticator.authenticate(enterLibraryNumber(), enterPassword());
+        try {
+            user = authenticator.authenticate(enterLibraryNumber(), enterPassword());
+            printStream.println("Welcome! You logged with success!");
+        } catch (Exception e) {
+            printStream.println(e.getMessage());
+        }
     }
 
     private String enterLibraryNumber() {
