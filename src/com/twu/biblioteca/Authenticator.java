@@ -7,13 +7,18 @@ import java.util.List;
 
 public class Authenticator {
     private List<User> users;
+    private User user;
 
     public Authenticator(List<User> users) {
         this.users = users;
     }
 
-    public User authenticate(String libraryNumber, String password) {
-        return checkPassword(findUserByLibraryNumber(libraryNumber), password);
+    public User getUser() {
+        return user;
+    }
+
+    public void authenticate(String libraryNumber, String password) {
+        user = checkPassword(findUserByLibraryNumber(libraryNumber), password);
     }
 
     private User findUserByLibraryNumber(String libraryNumber) {

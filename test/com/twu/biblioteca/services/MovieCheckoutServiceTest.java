@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
-import org.mockito.InOrder;
 
 import java.io.PrintStream;
 import java.util.ArrayList;

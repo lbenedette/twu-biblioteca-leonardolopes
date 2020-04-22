@@ -3,12 +3,12 @@ package com.twu.biblioteca.services;
 import com.twu.biblioteca.book.Book;
 import com.twu.biblioteca.book.BookCollection;
 import com.twu.biblioteca.exceptions.BookNotFoundException;
+import com.twu.biblioteca.interfaces.ProtectedService;
 import com.twu.biblioteca.interfaces.Reader;
-import com.twu.biblioteca.interfaces.Service;
 
 import java.io.PrintStream;
 
-public class BookCheckoutService implements Service {
+public class BookCheckoutService implements ProtectedService {
     private BookCollection bookCollection;
     private Reader bookReader;
     private PrintStream printStream;

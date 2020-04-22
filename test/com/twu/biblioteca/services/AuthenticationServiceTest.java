@@ -7,14 +7,11 @@ import com.twu.biblioteca.exceptions.UserNotFoundException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 
 import java.io.PrintStream;
 import java.util.Scanner;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
 import static org.mockito.Mockito.*;
 
@@ -50,18 +47,16 @@ public class AuthenticationServiceTest {
     public void authenticateAUserWithLibraryNumberAndPasswordTest() {
         in.provideLines("123-1234", "verycomplicatedpassword");
 
-        when(authenticator.authenticate("123-1234", "verycomplicatedpassword")).thenReturn(user);
+        when(authenticator.getUser()).thenReturn(user);
 
         authenticationService.call();
-
-        assertThat(authenticationService.getUser(), is(user));
     }
 
     @Test
     public void showSuccessfulMessageWhenUserLoggedTest() {
         in.provideLines("123-1234", "verycomplicatedpassword");
 
-        when(authenticator.authenticate("123-1234", "verycomplicatedpassword")).thenReturn(user);
+        when(authenticator.getUser()).thenReturn(user);
 
         authenticationService.call();
 
@@ -72,7 +67,7 @@ public class AuthenticationServiceTest {
     public void showErrorMessageWhenLibraryNumberDontExistTest() {
         in.provideLines("111-1111", "verycomplicatedpassword");
 
-        when(authenticator.authenticate("111-1111", "verycomplicatedpassword")).thenThrow(new UserNotFoundException("User not found!"));
+        doThrow(new UserNotFoundException("User not found!")).when(authenticator).authenticate("111-1111", "verycomplicatedpassword");
 
         authenticationService.call();
 
@@ -83,7 +78,7 @@ public class AuthenticationServiceTest {
     public void showErrorMessageWhenPasswordIsInvalidTest() {
         in.provideLines("123-1234", "invalidpassword");
 
-        when(authenticator.authenticate("123-1234", "invalidpassword")).thenThrow(new InvalidPasswordException("Password is invalid!"));
+        doThrow(new InvalidPasswordException("Password is invalid!")).when(authenticator).authenticate("123-1234", "invalidpassword");
 
         authenticationService.call();
 

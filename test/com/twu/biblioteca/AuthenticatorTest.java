@@ -26,7 +26,9 @@ public class AuthenticatorTest {
     public void returnUserWithLibraryNumberAndPasswordTest() {
         users.add(user);
 
-        assertThat(authenticator.authenticate("123-1234", "verycomplicatedpassword"), is(user));
+        authenticator.authenticate("123-1234", "verycomplicatedpassword");
+
+        assertThat(authenticator.getUser(), is(user));
     }
 
     @Test(expected = UserNotFoundException.class)

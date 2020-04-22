@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class BibliotecaApp {
     private static final PrintStream printStream = System.out;
     private static final Scanner scanner = new Scanner(System.in);
-    private static User loggedUser = null;
+    private static Authenticator authenticator;
 
     private static final String INPUT_OPTION_MESSAGE = "Enter a option: ";
     private static final String INPUT_BOOK_TITLE_MESSAGE = "Enter a book title: ";
@@ -24,15 +24,12 @@ public class BibliotecaApp {
         GreetingPrinter greetingPrinter = new GreetingPrinter(printStream);
         greetingPrinter.greeting();
 
-        Menu menu = new Menu(initializeServices(), printStream);
+        Menu menu = new Menu(initializeServices(), authenticator, printStream);
         InputReader inputReader = new InputReader(printStream, scanner, INPUT_OPTION_MESSAGE);
 
         while (true) {
             menu.show();
-            Service service = menu.callService(inputReader.read());
-            if (service instanceof AuthenticationService) {
-                loggedUser = ((AuthenticationService) service).getUser();
-            }
+            menu.callService(inputReader.read());
             pressAnyKeyToContinue();
         }
     }
@@ -46,7 +43,7 @@ public class BibliotecaApp {
 
         List<Movie> movies = movies();
         List<User> users = users();
-        Authenticator authenticator = new Authenticator(users);
+        authenticator = new Authenticator(users);
 
         services.put("0", new AuthenticationService(authenticator, printStream, scanner));
         services.put("1", new BookListService(bookCollection, printStream));

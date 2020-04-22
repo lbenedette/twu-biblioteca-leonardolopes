@@ -8,13 +8,12 @@ import org.junit.Test;
 import java.io.PrintStream;
 import java.util.LinkedHashMap;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 
 public class MenuTest {
     private LinkedHashMap<String, Service> services;
+    private Authenticator authenticator;
     private PrintStream printStream;
     private Menu menu;
     private FakeService fakeService;
@@ -23,10 +22,11 @@ public class MenuTest {
     public void setUp() {
         services = new LinkedHashMap<>();
 
+        authenticator = mock(Authenticator.class);
         printStream = mock(PrintStream.class);
         fakeService = mock(FakeService.class);
 
-        menu = new Menu(services, printStream);
+        menu = new Menu(services, authenticator, printStream);
     }
 
     @Test

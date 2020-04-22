@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.interfaces.ProtectedService;
 import com.twu.biblioteca.interfaces.Service;
 
 import java.io.PrintStream;
@@ -7,11 +8,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Menu {
-    LinkedHashMap<String, Service> services;
-    PrintStream printStream;
+    private LinkedHashMap<String, Service> services;
+    private Authenticator authenticator;
+    private PrintStream printStream;
 
-    public Menu(LinkedHashMap<String, Service> services, PrintStream printStream) {
+    public Menu(LinkedHashMap<String, Service> services, Authenticator authenticator, PrintStream printStream) {
         this.services = services;
+        this.authenticator = authenticator;
         this.printStream = printStream;
     }
 
@@ -23,17 +26,28 @@ public class Menu {
         return services;
     }
 
-    public Service callService(String option) {
-        Service service = null;
-
+    public void callService(String option) {
         try {
-            service = services.get(option);
-            service.call();
+            checkAuth(services.get(option));
         } catch (NullPointerException e) {
             printStream.println("Please select a valid option!");
         }
+    }
 
-        return service;
+    private void checkAuth(Service service) {
+        if (check(service)) {
+            service.call();
+        } else {
+            printStream.println("Access denied! You need to login to access this");
+        }
+    }
+
+    private boolean check(Service service) {
+        if (service instanceof ProtectedService) {
+            return authenticator.getUser() != null;
+        }
+
+        return true;
     }
 
     public void show() {
