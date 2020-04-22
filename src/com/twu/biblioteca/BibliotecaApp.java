@@ -5,7 +5,6 @@ import com.twu.biblioteca.book.BookCollection;
 import com.twu.biblioteca.interfaces.Service;
 import com.twu.biblioteca.services.*;
 
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -15,6 +14,7 @@ import java.util.Scanner;
 public class BibliotecaApp {
     private static final PrintStream printStream = System.out;
     private static final Scanner scanner = new Scanner(System.in);
+    private static User loggedUser = null;
 
     private static final String INPUT_OPTION_MESSAGE = "Enter a option: ";
     private static final String INPUT_BOOK_TITLE_MESSAGE = "Enter a book title: ";
@@ -29,7 +29,10 @@ public class BibliotecaApp {
 
         while (true) {
             menu.show();
-            menu.callService(inputReader.read());
+            Service service = menu.callService(inputReader.read());
+            if (service instanceof AuthenticationService) {
+                loggedUser = ((AuthenticationService) service).getUser();
+            }
             pressAnyKeyToContinue();
         }
     }
@@ -42,7 +45,10 @@ public class BibliotecaApp {
         InputReader movieReader = new InputReader(printStream, scanner, INPUT_MOVIE_TITLE_MESSAGE);
 
         List<Movie> movies = movies();
+        List<User> users = users();
+        Authenticator authenticator = new Authenticator(users);
 
+        services.put("0", new AuthenticationService(authenticator, printStream, scanner));
         services.put("1", new BookListService(bookCollection, printStream));
         services.put("2", new BookCheckoutService(bookCollection, bookReader, printStream));
         services.put("3", new BookCheckinService(bookCollection, bookReader, printStream));
@@ -67,6 +73,15 @@ public class BibliotecaApp {
         movies.add(new Movie("The Matrix", "1999", "The Wachowskis", "9", true));
 
         return movies;
+    }
+
+    private static List<User> users() {
+        List<User> users = new ArrayList<>();
+        users.add(new User("123-1234", "password"));
+        users.add(new User("111-1111", "password"));
+        users.add(new User("222-2222", "password"));
+
+        return users;
     }
 
     private static void pressAnyKeyToContinue() {

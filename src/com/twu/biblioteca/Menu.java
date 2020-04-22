@@ -23,13 +23,17 @@ public class Menu {
         return services;
     }
 
-    public void callService(String option) {
+    public Service callService(String option) {
+        Service service = null;
+
         try {
-            Service service = services.get(option);
+            service = services.get(option);
             service.call();
         } catch (NullPointerException e) {
             printStream.println("Please select a valid option!");
         }
+
+        return service;
     }
 
     public void show() {
