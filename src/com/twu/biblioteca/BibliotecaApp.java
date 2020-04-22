@@ -48,7 +48,7 @@ public class BibliotecaApp {
         services.put("3", new BookCheckinService(bookCollection, bookReader, printStream));
         services.put("4", new MovieListService(movies, printStream));
         services.put("5", new MovieCheckoutService(movies, movieReader, printStream));
-        services.put("q", new QuitApplicationService());
+        services.put("quit", new QuitApplicationService());
 
         return services;
     }
