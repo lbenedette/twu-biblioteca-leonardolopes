@@ -1,6 +1,5 @@
 package com.twu.biblioteca.book;
 
-import com.twu.biblioteca.book.Book;
 import com.twu.biblioteca.exceptions.BookNotFoundException;
 
 import java.util.List;
