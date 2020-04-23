@@ -51,6 +51,7 @@ public class BibliotecaApp {
         services.put("3", new BookCheckinService(bookCollection, bookReader, printStream));
         services.put("4", new MovieListService(movies, printStream));
         services.put("5", new MovieCheckoutService(movies, movieReader, printStream));
+        services.put("9", new UserInfoService(authenticator, printStream));
         services.put("quit", new QuitApplicationService());
 
         return services;
@@ -74,9 +75,7 @@ public class BibliotecaApp {
 
     private static List<User> users() {
         List<User> users = new ArrayList<>();
-        users.add(new User("123-1234", "password"));
-        users.add(new User("111-1111", "password"));
-        users.add(new User("222-2222", "password"));
+        users.add(new User("123-1234", "password", "Leonardo Lopes", "leonardo@email.com", "(99) 99991-1111"));
 
         return users;
     }

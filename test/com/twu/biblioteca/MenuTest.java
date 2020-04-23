@@ -1,5 +1,7 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.fakes.FakeHideProtectedService;
+import com.twu.biblioteca.fakes.FakeProtectedService;
 import com.twu.biblioteca.interfaces.Service;
 import com.twu.biblioteca.fakes.FakeService;
 import org.junit.Before;
@@ -56,5 +58,57 @@ public class MenuTest {
         menu.callService("1");
 
         verify(printStream).println("Please select a valid option!");
+    }
+
+    @Test
+    public void dontCallProtectedServiceWhenUserIsNotLoggedTest() {
+        FakeProtectedService fakeProtectedService = mock(FakeProtectedService.class);
+        menu.addService("1", fakeProtectedService);
+
+        when(authenticator.getUser()).thenReturn(null);
+
+        menu.callService("1");
+
+        verify(fakeProtectedService, never()).call();
+    }
+
+    @Test
+    public void callProtectedServiceWhenUserIsLoggedTest() {
+        FakeProtectedService fakeProtectedService = mock(FakeProtectedService.class);
+        User user = mock(User.class);
+        menu.addService("1", fakeProtectedService);
+
+        when(authenticator.getUser()).thenReturn(user);
+
+        menu.callService("1");
+
+        verify(fakeProtectedService).call();
+    }
+
+    @Test
+    public void dontShowHideProtectedServiceWhenUserIsNotLoggedTest() {
+        FakeHideProtectedService fakeHideProtectedService = mock(FakeHideProtectedService.class);
+        menu.addService("1", fakeHideProtectedService);
+
+        when(fakeHideProtectedService.getName()).thenReturn("Hide Service");
+        when(authenticator.getUser()).thenReturn(null);
+
+        menu.show();
+
+        verify(printStream).println("MENU\n");
+    }
+
+    @Test
+    public void showHideProtectedServiceWhenUserIsLoggedTest() {
+        FakeHideProtectedService fakeHideProtectedService = mock(FakeHideProtectedService.class);
+        User user = mock(User.class);
+        menu.addService("1", fakeHideProtectedService);
+
+        when(fakeHideProtectedService.getName()).thenReturn("Hide Service");
+        when(authenticator.getUser()).thenReturn(user);
+
+        menu.show();
+
+        verify(printStream).println("MENU\n1 - Hide Service\n");
     }
 }

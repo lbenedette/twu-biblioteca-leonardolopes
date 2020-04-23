@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AuthenticatorTest {
-    private User user = new User("123-1234", "verycomplicatedpassword");
+    private User user = new User("123-1234", "password", "Leonardo Lopes", "leonardo@email.com", "(99) 99991-1111");
     private List<User> users;
     private Authenticator authenticator;
 

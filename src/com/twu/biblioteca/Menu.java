@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.interfaces.HideProtectedService;
 import com.twu.biblioteca.interfaces.ProtectedService;
 import com.twu.biblioteca.interfaces.Service;
 
@@ -58,12 +59,22 @@ public class Menu {
         StringBuilder menu = new StringBuilder("MENU\n");
 
         for (Map.Entry<String, Service> service : services.entrySet()) {
-            menu.append(service.getKey())
-                .append(" - ")
-                .append(service.getValue().getName())
-                .append("\n");
+            if (canShowService(service.getValue())) {
+                menu.append(service.getKey())
+                    .append(" - ")
+                    .append(service.getValue().getName())
+                    .append("\n");
+            }
         }
 
         return menu.toString();
+    }
+
+    private boolean canShowService(Service service) {
+        if (service instanceof HideProtectedService) {
+            return authenticator.getUser() != null;
+        }
+
+        return true;
     }
 }

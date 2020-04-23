@@ -16,7 +16,7 @@ import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emp
 import static org.mockito.Mockito.*;
 
 public class AuthenticationServiceTest {
-    private final User user = new User("123-1234", "verycomplicatedpassword");
+    private final User user = new User("123-1234", "password", "Leonardo Lopes", "leonardo@email.com", "(99) 99991-1111");
     private Authenticator authenticator;
     private PrintStream printStream;
     private Scanner scanner;
