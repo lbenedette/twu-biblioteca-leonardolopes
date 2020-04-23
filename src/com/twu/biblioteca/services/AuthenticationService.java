@@ -11,7 +11,6 @@ public class AuthenticationService implements Service {
     private Authenticator authenticator;
     private PrintStream printStream;
     private final Scanner scanner;
-    private User user = null;
 
     public AuthenticationService(Authenticator authenticator, PrintStream printStream, Scanner scanner) {
         this.authenticator = authenticator;
@@ -21,10 +20,6 @@ public class AuthenticationService implements Service {
 
     public String getName() {
         return "Login";
-    }
-
-    public User getUser() {
-        return user;
     }
 
     public void call() {
